@@ -19,8 +19,7 @@ public class GomokuGameState extends Observable implements Observer{
 	private GameGrid gameGrid;
 	
     //Possible game states
-	private final int NOT_STARTED = 0;
-	private int currentState;
+	private GameState currentState;
 	
 	private GomokuClient client;
 	
@@ -35,7 +34,7 @@ public class GomokuGameState extends Observable implements Observer{
 		client = gc;
 		client.addObserver(this);
 		gc.setGameState(this);
-		currentState = NOT_STARTED;
+		currentState = GameState.NOT_STARTED;
 		gameGrid = new GameGrid(DEFAULT_SIZE);
 	}
 	
@@ -46,7 +45,7 @@ public class GomokuGameState extends Observable implements Observer{
 	 * @return the message string
 	 */
 	public String getMessageString(){
-		return "";
+		return this.message;
 	}
 	
 	/**
@@ -55,7 +54,7 @@ public class GomokuGameState extends Observable implements Observer{
 	 * @return the game grid
 	 */
 	public GameGrid getGameGrid(){
-		return null;
+		return this.gameGrid;
 	}
 
 	/**
@@ -64,29 +63,81 @@ public class GomokuGameState extends Observable implements Observer{
 	 * @param x the x coordinate
 	 * @param y the y coordinate
 	 */
-	public void move(int x, int y){}
+	public void move(int x, int y){
+		boolean move = false;
+		if (this.currentState == GameState.MY_TURN) {
+			move = this.gameGrid.move(x, y, GameGrid.OccupiedBy.ME);
+		} else {
+			this.setMessage("It's not your turn.");
+			return;
+		}
+		
+		if (move) {
+			this.client.sendMoveMessage(x, y);
+			this.setMessage("your turn is over.");
+			
+			if (this.gameGrid.isWinner(GameGrid.OccupiedBy.ME)) {
+				this.currentState = GameState.FINISHED;
+			} else {
+				this.currentState = GameState.OTHERS_TURN;
+			}
+			
+			this.setChanged();
+			this.notifyObservers();
+		}
+	}
 	
 	/**
 	 * Starts a new game with the current client
 	 */
-	public void newGame(){}
+	public void newGame(){
+		if (client.getConnectionStatus() != 0) {
+			this.gameGrid.clearGrid();
+			this.currentState = GameState.OTHERS_TURN;
+			this.client.sendNewGameMessage();
+			this.setMessage("New game created.");
+			this.updateChanges();
+		} else {
+			this.setMessage("No connection was found. Can't create game.");
+		}
+	}
 	
 	/**
 	 * Other player has requested a new game, so the 
 	 * game state is changed accordingly
 	 */
-	public void receivedNewGame(){}
+	public void receivedNewGame(){
+		this.gameGrid.clearGrid();
+		this.currentState = GameState.MY_TURN;
+		this.setMessage("Other guy created a game.");
+		this.updateChanges();
+	}
 	
 	/**
 	 * The connection to the other player is lost, 
 	 * so the game is interrupted
 	 */
-	public void otherGuyLeft(){}
+	public void otherGuyLeft(){
+		this.gameGrid.clearGrid();
+		this.currentState = GameState.NOT_STARTED;
+		this.setMessage("Opponent left.");
+		this.updateChanges();
+	}
 	
 	/**
 	 * The player disconnects from the client
 	 */
-	public void disconnect(){}
+	public void disconnect(){
+		if(this.client.getConnectionStatus() != 0) {
+			this.client.disconnect();
+			this.gameGrid.clearGrid();
+			this.setMessage("You have disconnected.");
+			this.currentState = GameState.NOT_STARTED;
+			this.updateChanges();
+		} else {
+			this.setMessage("You are already disconnected");
+		}
+	}
 	
 	/**
 	 * The player receives a move from the other player
@@ -94,7 +145,15 @@ public class GomokuGameState extends Observable implements Observer{
 	 * @param x The x coordinate of the move
 	 * @param y The y coordinate of the move
 	 */
-	public void receivedMove(int x, int y){}
+	public void receivedMove(int x, int y){
+		this.gameGrid.move(x, y, GameGrid.OccupiedBy.OTHER);
+		if (this.gameGrid.isWinner(GameGrid.OccupiedBy.OTHER)) {
+			this.currentState = GameState.FINISHED;
+			this.setMessage("Other player won");
+		}
+		
+		this.updateChanges();
+	}
 	
 	public void update(Observable o, Object arg) {
 		
@@ -112,6 +171,21 @@ public class GomokuGameState extends Observable implements Observer{
 		notifyObservers();
 		
 		
+	}
+	
+	private void updateChanges() {
+		this.setChanged();
+		this.notifyObservers();
+	}
+	
+	private void setMessage(String message) {
+		this.message = message;
+		this.setChanged();
+		this.notifyObservers();
+	}
+	
+	private static enum GameState {
+		NOT_STARTED, MY_TURN, OTHERS_TURN, FINISHED
 	}
 	
 }

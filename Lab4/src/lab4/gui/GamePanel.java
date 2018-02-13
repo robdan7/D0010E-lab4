@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import lab4.data.GameGrid;
@@ -42,7 +44,7 @@ public class GamePanel extends JPanel implements Observer{
 	 * @return an integer array containing the [x, y] grid position
 	 */
 	public int[] getGridPosition(int x, int y){
-		return null;
+		return new int[] {x/this.UNIT_SIZE, y/this.UNIT_SIZE};
 	}
 	
 	public void update(Observable arg0, Object arg1) {
@@ -51,7 +53,7 @@ public class GamePanel extends JPanel implements Observer{
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		
+		g.drawRect(0, 0, 20, 20);
 	}
 	
 }

@@ -2,6 +2,7 @@ package lab4;
 
 import lab4.client.*;
 import lab4.data.GomokuGameState;
+import lab4.gui.GomokuGUI;
 
 public class GomokuMain {
 
@@ -16,5 +17,7 @@ public class GomokuMain {
 		GomokuClient c = new GomokuClient(0);
 		
 		GomokuGameState s = new GomokuGameState(c);
+		
+		GomokuGUI g = new GomokuGUI(s, c);
 	}
 }

@@ -9,8 +9,10 @@ import java.util.Observable;
 public class GameGrid extends Observable{
 
 	OccupiedBy[][] grid;
+	private int[][] neighborGrid;
+	private int highestPoints = 0;
 	private int size;
-	public static final int INROW = 5;
+	public static final int INROW = 5; // Squares to win.
 
 	/**
 	 * Constructor
@@ -18,7 +20,8 @@ public class GameGrid extends Observable{
 	 * @param size The width/height of the game grid
 	 */
 	public GameGrid(int size){
-		grid = new OccupiedBy[size][size];
+		this.grid = new OccupiedBy[size][size];
+		this.neighborGrid = new int[size][size];
 		this.size = size;
 	}
 	
@@ -29,8 +32,8 @@ public class GameGrid extends Observable{
 	 * @param y The y coordinate
 	 * @return the value of the specified location
 	 */
-	public int getLocation(int x, int y){
-		return 0;
+	public OccupiedBy getLocation(int x, int y){
+		return this.grid[x][y];
 	}
 	
 	/**
@@ -52,14 +55,14 @@ public class GameGrid extends Observable{
 	 */
 	public boolean move(int x, int y, OccupiedBy player){
 		boolean result = true;
-		if (this.grid[x][y] == null) {
+		if (this.getLocation(x, y) == OccupiedBy.EMPTY) {
 			this.grid[x][y] = player;
+			this.updateNeighbors(x, y);
 			this.setChanged();
 			this.notifyObservers();
 		} else {
 			result = false;
-		}
-		
+		}		
 		
 		return result;
 	}
@@ -68,8 +71,23 @@ public class GameGrid extends Observable{
 	 * Clears the grid of pieces
 	 */
 	public void clearGrid(){
+		for (int x = 0; x < this.grid.length; x++) {
+			for (int y = 0; y < this.grid[x].length; y++) {
+				this.grid[x][y] = OccupiedBy.EMPTY;
+			}
+		}
 		this.setChanged();
 		this.notifyObservers();
+	}
+	
+	private void updateNeighbors(int x, int y) {
+		if ((x == 0) || (x == this.size)) {
+			this.checkX(-1);
+		}
+	}
+	
+	private boolean checkX(int direction) {
+		return false;
 	}
 	
 	/**
