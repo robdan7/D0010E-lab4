@@ -16,23 +16,6 @@ class Node {
 	private Vector2i position;
 	private OccupiedBy value;
 
-	public static void main(String[] args) {
-		Node n1 = new Node(OccupiedBy.ME, 0, 0);
-		Node n2 = new Node(OccupiedBy.ME, 1, 0);
-		Node n3 = new Node(OccupiedBy.ME, 0, 1);
-		Node n4 = new Node(OccupiedBy.ME, 2, 0);
-		Node n5 = new Node(OccupiedBy.OTHER, 3, 0);
-		Node n6 = new Node(OccupiedBy.ME, 4, 0);
-		n1.addNeighbor(n2, n2.getX(), n2.getY());
-		n1.addNeighbor(n3, n3.getX(), n2.getY());
-		n3.addNeighbor(n2, n2.getX(), n2.getY());
-		n4.addNeighbor(n2, n2.getX(), n2.getY());
-		n4.addNeighbor(n5, n5.getX(), n5.getY());
-		n4.addNeighbor(n6, n6.getX(), n6.getX());
-
-		System.out.println(n1.getNeighborCount());
-	}
-
 	public Node(OccupiedBy e, int x, int y) {
 		this.value = e;
 		this.position = new Vector2i(x, y);
