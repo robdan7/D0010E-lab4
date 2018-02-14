@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 /**
  * An instance of this class is a single node in a grid. When it is connected to
- * other nodes, they can wind each other and form a chain of which the length is
+ * other nodes, they can find each other and form a chain of which the length is
  * returned.
  * 
  * @author Robin
