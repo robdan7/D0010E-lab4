@@ -1,5 +1,7 @@
 package lab4.data;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Observable;
 
 /**
@@ -13,6 +15,16 @@ public class GameGrid extends Observable{
 	private int highestPoints = 0;
 	private int size;
 	public static final int INROW = 5; // Squares to win.
+	
+	public static void main(String[] args) {
+		Node n1 = new Node(null, 0,0);
+		Node n2 = new Node(null, 1,0);
+		Node n3 = new Node(null, 0,1);
+		n1.addNeighbor(n2, n2.getX(), n2.getY());
+		n1.addNeighbor(n3, n3.getX(), n3.getY());
+		
+		System.out.println(n1.getNeighborCount());
+	}
 
 	/**
 	 * Constructor
@@ -102,5 +114,38 @@ public class GameGrid extends Observable{
 	
 	public static enum OccupiedBy {
 		EMPTY, ME, OTHER
+	}
+}
+
+
+class Vector2i {
+	int x, y;
+	
+	public int getX() {
+		return this.x;
+	}
+	
+	public int getY() {
+		return this.y;
+	}
+	
+	public Vector2i(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+	
+	public Vector2i copy() {
+		return new Vector2i(this.getX(), this.getY());
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof Vector2i)) {
+			return false;
+		}
+		if ((((Vector2i)o).getX() == this.getX()) && (((Vector2i)o).getY() == this.getY())) {
+			return true;
+		}
+		return false;
 	}
 }
