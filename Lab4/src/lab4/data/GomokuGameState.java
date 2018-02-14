@@ -66,7 +66,7 @@ public class GomokuGameState extends Observable implements Observer{
 	public void move(int x, int y){
 		boolean move = false;
 		if (this.currentState == GameState.MY_TURN) {
-			move = this.gameGrid.move(x, y, GameGrid.OccupiedBy.ME);
+			move = this.gameGrid.move(x, y, Node.OccupiedBy.ME);
 		} else {
 			this.setMessage("It's not your turn.");
 			return;
@@ -76,7 +76,7 @@ public class GomokuGameState extends Observable implements Observer{
 			this.client.sendMoveMessage(x, y);
 			this.setMessage("your turn is over.");
 			
-			if (this.gameGrid.isWinner(GameGrid.OccupiedBy.ME)) {
+			if (this.gameGrid.isWinner(Node.OccupiedBy.ME)) {
 				this.currentState = GameState.FINISHED;
 			} else {
 				this.currentState = GameState.OTHERS_TURN;
@@ -146,8 +146,8 @@ public class GomokuGameState extends Observable implements Observer{
 	 * @param y The y coordinate of the move
 	 */
 	public void receivedMove(int x, int y){
-		this.gameGrid.move(x, y, GameGrid.OccupiedBy.OTHER);
-		if (this.gameGrid.isWinner(GameGrid.OccupiedBy.OTHER)) {
+		this.gameGrid.move(x, y, Node.OccupiedBy.OTHER);
+		if (this.gameGrid.isWinner(Node.OccupiedBy.OTHER)) {
 			this.currentState = GameState.FINISHED;
 			this.setMessage("Other player won");
 		}
