@@ -133,7 +133,7 @@ class Node {
 	 * @return How many vertical neighbors there are in a row.
 	 */
 	private int getVerticalNeighbors(Node[][] grid, Node n, int totalNeighbors) {
-		if (totalNeighbors == GameGrid.INROW) {
+		if (totalNeighbors == GameGrid.INROW) { // The required neighbors have been found.
 			return totalNeighbors;
 		}
 
@@ -171,6 +171,7 @@ class Node {
 		if (totalNeighbors.length != 2) {
 			throw new IllegalArgumentException("Array does not contain two integers");
 		} else if ((totalNeighbors[0] == GameGrid.INROW) || (totalNeighbors[1] == GameGrid.INROW)) {
+			// The required neighbors have been found.
 			return new int[] { totalNeighbors[0], totalNeighbors[1] };
 		} 
 
