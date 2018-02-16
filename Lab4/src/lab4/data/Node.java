@@ -20,11 +20,12 @@ public class Node {
 	}
 
 	/**
-	 * find a chain of nodes with the maximum length of {@link GameGrid#INROW}.
+	 * find a chain of nodes with a specified length.
 	 * 
 	 * @param grid
 	 *            - The array to search in. An exception is thrown if the starting
 	 *            node is not in it.
+	 * @param rows - The max length.
 	 * @return The longest chain of {@link Node} instances in either a horizontal,
 	 *         vertical or diagonal direction.
 	 */
@@ -43,7 +44,7 @@ public class Node {
 				if (grid[x][y].getValue() == this.getValue()) {
 
 					whiledRight: while (counter < rows && x + nextvalue < grid.length && y - nextvalue >= 0) {
-						// Diagonal to the right.
+						// Diagonal to the upper right.
 						if (this.fetchFromGrid(grid, x + nextvalue, y - nextvalue).getValue() == this.getValue()) {
 							nextvalue++;
 							counter++;
@@ -64,7 +65,7 @@ public class Node {
 					counter = 1;
 
 					whiledDown: while (counter < GameGrid.INROW && x - nextvalue >= 0 && y - nextvalue >= 0) {
-						// Diagonal to the left.
+						// Diagonal to the upper left.
 						if (this.fetchFromGrid(grid, x - nextvalue, y - nextvalue).getValue() == this.getValue()) {
 							nextvalue++;
 							counter++;
