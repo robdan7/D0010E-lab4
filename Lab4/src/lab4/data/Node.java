@@ -29,6 +29,12 @@ public class Node {
 	 *         vertical or diagonal direction.
 	 */
 	public int getMaximumChain(Node[][] grid, int rows) {
+		/*
+		 * Lite svenska: Vi gjorde en version av denna metod var. En av oss gjorde denna
+		 * och den andre på ett helt annat sätt, baserat på det senaste draget som letade reda på noder runt omkring sig. 
+		 * Den enda lösningen som båda av oss kunde förstå är den nedan, så den behöll vi. Det är dock självklart att 
+		 * den skrotade lösningen var mycket snabbare och generellt bättre. Det är vi enade om.
+		 */
 		int nextvalue = 1;
 		int counter = 1;
 		int maxNeighbors = 0;
@@ -45,7 +51,7 @@ public class Node {
 								maxNeighbors = counter;
 								break loop;
 							}
-								
+
 						} else {
 							if (counter > maxNeighbors) {
 								maxNeighbors = counter;
