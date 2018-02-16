@@ -9,28 +9,13 @@ import java.util.Observable;
 
 public class GameGrid extends Observable {
 
-	private final Node[][] grid;
+	private Node[][] grid;
 	private int size;
-	public static final int INROW = 5; // Required points to win.
+	public static final int INROW = 2; // Required points to win.
 
 	private HashMap<Node.OccupiedBy, Integer> points; // Keep track of the score for all players.
 
-	public static void main(String[] args) {
-		GameGrid grid = new GameGrid(10);
-		grid.move(0, 0, Node.OccupiedBy.ME);
-		grid.move(1, 0, Node.OccupiedBy.ME);
-
-		grid.move(2, 0, Node.OccupiedBy.ME);
-
-		grid.move(3, 0, Node.OccupiedBy.ME);
-
-		grid.move(4, 0, Node.OccupiedBy.ME);
-		
-		grid.move(5, 0, Node.OccupiedBy.ME);
-
-		System.out.println(grid.isWinner(Node.OccupiedBy.ME));
-
-	}
+	
 
 	/**
 	 * Constructor
@@ -48,11 +33,15 @@ public class GameGrid extends Observable {
 		}
 
 		// Init score counter.
+		this.clearPoints();
+
+	}
+	
+	public void clearPoints() {
 		this.points = new HashMap<>();
 		for (Node.OccupiedBy o : Node.OccupiedBy.values()) {
 			this.points.put(o, 0);
 		}
-
 	}
 
 	/**
@@ -139,7 +128,8 @@ public class GameGrid extends Observable {
 	 * @return true if player has 5 in row, false otherwise
 	 */
 	public boolean isWinner(Node.OccupiedBy player) {
-		if (this.points.get(player) == INROW) {
+		if (this.points.get(player) >= INROW) {
+			
 			return true;
 		}
 		return false;

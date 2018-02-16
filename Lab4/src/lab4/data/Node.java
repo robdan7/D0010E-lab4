@@ -46,7 +46,7 @@ class Node {
 		} else if (temp > largestChain) {
 			largestChain = temp;
 		}
-
+		
 		int[] tempArray = this.getDiagonalNeighbors(grid, this, new int[] { 1, 1 });
 		temp = tempArray[0] > tempArray[1] ? tempArray[0] : tempArray[1];
 		if (temp == GameGrid.INROW) {
@@ -136,8 +136,7 @@ class Node {
 		if (totalNeighbors == GameGrid.INROW) { // The required neighbors have been found.
 			return totalNeighbors;
 		}
-
-		for (int y = this.getX() - 1; y <= this.getY() + 1; y += 2) {
+		for (int y = this.getY() - 1; y <= this.getY() + 1; y += 2) {
 			Node neighbor = this.fetchFromGrid(grid, this.getX(), y);
 			if (neighbor != null) {
 				if ((neighbor.getValue() == this.getValue()) && !neighbor.equals(n)) {

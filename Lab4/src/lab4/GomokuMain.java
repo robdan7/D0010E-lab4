@@ -14,7 +14,12 @@ public class GomokuMain {
 			port = 9874;
 		}
 
-		GomokuClient c = new GomokuClient(0);
+		init(7000);
+		init(8000);
+	}
+	
+	public static void init(int i) {
+		GomokuClient c = new GomokuClient(i);
 		
 		GomokuGameState s = new GomokuGameState(c);
 		

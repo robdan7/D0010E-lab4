@@ -77,6 +77,7 @@ public class GomokuGameState extends Observable implements Observer{
 			
 			if (this.gameGrid.isWinner(Node.OccupiedBy.ME)) {
 				this.currentState = GameState.FINISHED;
+				this.setMessage("Congrats, you won!");
 			} else {
 				this.currentState = GameState.OTHERS_TURN;
 			}
@@ -90,6 +91,7 @@ public class GomokuGameState extends Observable implements Observer{
 	 */
 	public void newGame(){
 		if (client.getConnectionStatus() != 0) {
+			this.gameGrid.clearPoints();
 			this.gameGrid.clearGrid();
 			this.currentState = GameState.OTHERS_TURN;
 			this.client.sendNewGameMessage();
@@ -105,6 +107,7 @@ public class GomokuGameState extends Observable implements Observer{
 	 * game state is changed accordingly.
 	 */
 	public void receivedNewGame(){
+		this.gameGrid.clearPoints();
 		this.gameGrid.clearGrid();
 		this.currentState = GameState.MY_TURN;
 		this.setMessage("Other guy created a game.");
@@ -149,6 +152,7 @@ public class GomokuGameState extends Observable implements Observer{
 			this.currentState = GameState.FINISHED;
 			this.setMessage("Other player won");
 		} else {
+			this.setMessage("Your turn.");
 			this.currentState = GameState.MY_TURN;
 		}
 		
