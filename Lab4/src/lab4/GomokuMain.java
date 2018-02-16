@@ -9,7 +9,7 @@ public class GomokuMain {
 	public static void main(String[] args) {
 		int port;
 		if (args.length > 1) {
-			
+			throw new IllegalArgumentException("two arguments!");
 		}
 		try {
 			port = Integer.parseInt(args[0]);
@@ -17,8 +17,7 @@ public class GomokuMain {
 			port = 9874;
 		}
 
-		init(7000);
-		init(8000);
+		init(port);
 	}
 	
 	public static void init(int i) {
