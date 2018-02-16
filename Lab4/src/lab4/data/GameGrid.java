@@ -10,7 +10,7 @@ import java.util.Observable;
 
 public class GameGrid extends Observable {
 
-	Node[][] grid;
+	private final Node[][] grid;
 	private int highestPoints = 0;
 	private int size;
 	public static final int INROW = 5; // Squares to win.
@@ -20,13 +20,15 @@ public class GameGrid extends Observable {
 	public static void main(String[] args) {
 		GameGrid grid = new GameGrid(10);
 		grid.move(0, 0, Node.OccupiedBy.ME);
-		grid.move(1, 1, Node.OccupiedBy.ME);
+		grid.move(1, 0, Node.OccupiedBy.ME);
 
-		grid.move(2, 2, Node.OccupiedBy.ME);
+		grid.move(2, 0, Node.OccupiedBy.ME);
 
-		grid.move(3, 3, Node.OccupiedBy.ME);
+		grid.move(3, 0, Node.OccupiedBy.ME);
 
-		grid.move(4, 4, Node.OccupiedBy.ME);
+		grid.move(4, 0, Node.OccupiedBy.ME);
+		
+		grid.move(5, 0, Node.OccupiedBy.ME);
 
 		System.out.println(grid.isWinner(Node.OccupiedBy.ME));
 
