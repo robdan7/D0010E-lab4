@@ -15,7 +15,7 @@ public class GameGrid extends Observable {
 	private int size;
 	public static final int INROW = 5; // Squares to win.
 
-	private HashMap<Node.OccupiedBy, Integer> points; // Keep the score of all players.
+	private HashMap<Node.OccupiedBy, Integer> points; // Keep track of the score for all players.
 
 	public static void main(String[] args) {
 		GameGrid grid = new GameGrid(10);
@@ -141,7 +141,7 @@ public class GameGrid extends Observable {
 	 * @return true if player has 5 in row, false otherwise
 	 */
 	public boolean isWinner(Node.OccupiedBy player) {
-		if (this.points.get(player) >= INROW) {
+		if (this.points.get(player) == INROW) {
 			return true;
 		}
 		return false;
