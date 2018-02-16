@@ -6,7 +6,7 @@ package lab4.data;
  * @author Robin
  *
  */
-class Node {
+public class Node {
 	// Keep track of where in the grid the node is. These variables must not be altered, therefore they are final.
 	private final int x, y;
 
