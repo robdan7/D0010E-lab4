@@ -69,7 +69,6 @@ public class GomokuGameState extends Observable implements Observer{
 			move = this.gameGrid.move(x, y, Node.OccupiedBy.ME);
 		} else {
 			this.setMessage("It's not your turn.");
-			return;
 		}
 		
 		if (move) {
@@ -82,8 +81,7 @@ public class GomokuGameState extends Observable implements Observer{
 				this.currentState = GameState.OTHERS_TURN;
 			}
 			
-			this.setChanged();
-			this.notifyObservers();
+			this.updateChanges();
 		}
 	}
 	
@@ -104,7 +102,7 @@ public class GomokuGameState extends Observable implements Observer{
 	
 	/**
 	 * Other player has requested a new game, so the 
-	 * game state is changed accordingly
+	 * game state is changed accordingly.
 	 */
 	public void receivedNewGame(){
 		this.gameGrid.clearGrid();
@@ -115,7 +113,7 @@ public class GomokuGameState extends Observable implements Observer{
 	
 	/**
 	 * The connection to the other player is lost, 
-	 * so the game is interrupted
+	 * so the game is interrupted.
 	 */
 	public void otherGuyLeft(){
 		this.gameGrid.clearGrid();
@@ -125,7 +123,7 @@ public class GomokuGameState extends Observable implements Observer{
 	}
 	
 	/**
-	 * The player disconnects from the client
+	 * The player disconnects from the client.
 	 */
 	public void disconnect(){
 		if(this.client.getConnectionStatus() != 0) {
@@ -150,27 +148,25 @@ public class GomokuGameState extends Observable implements Observer{
 		if (this.gameGrid.isWinner(Node.OccupiedBy.OTHER)) {
 			this.currentState = GameState.FINISHED;
 			this.setMessage("Other player won");
+		} else {
+			this.currentState = GameState.MY_TURN;
 		}
 		
 		this.updateChanges();
 	}
 	
 	public void update(Observable o, Object arg) {
-		
 		switch(client.getConnectionStatus()){
 		case GomokuClient.CLIENT:
 			message = "Game started, it is your turn!";
-			//currentState = MY_TURN;
+			this.currentState = GameState.MY_TURN;
 			break;
 		case GomokuClient.SERVER:
 			message = "Game started, waiting for other player...";
-			//currentState = OTHER_TURN;
+			this.currentState = GameState.OTHERS_TURN;
 			break;
 		}
-		setChanged();
-		notifyObservers();
-		
-		
+		this.updateChanges();
 	}
 	
 	private void updateChanges() {
@@ -180,11 +176,10 @@ public class GomokuGameState extends Observable implements Observer{
 	
 	private void setMessage(String message) {
 		this.message = message;
-		this.setChanged();
-		this.notifyObservers();
+		this.updateChanges();
 	}
 	
-	private static enum GameState {
+	private enum GameState {
 		NOT_STARTED, MY_TURN, OTHERS_TURN, FINISHED
 	}
 	
