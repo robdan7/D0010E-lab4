@@ -8,8 +8,13 @@ import java.util.Observer;
 
 import lab4.client.GomokuClient;
 
+
+
 /**
  * Represents the state of a game
+ * 
+ * @author Robin Danielsson, Zerophymyr Falk
+ *
  */
 
 public class GomokuGameState extends Observable implements Observer{
@@ -65,6 +70,9 @@ public class GomokuGameState extends Observable implements Observer{
 	 */
 	public void move(int x, int y){
 		boolean move = false;
+		if (this.currentState == GameState.FINISHED || this.currentState == GameState.NOT_STARTED) {
+			return;
+		}
 		if (this.currentState == GameState.MY_TURN) {
 			move = this.gameGrid.move(x, y, Node.OccupiedBy.ME);
 		} else {

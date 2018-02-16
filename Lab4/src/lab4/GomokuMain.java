@@ -4,6 +4,12 @@ import lab4.client.*;
 import lab4.data.GomokuGameState;
 import lab4.gui.GomokuGUI;
 
+/**
+ * 
+ * @author Robin Danielsson, Zerophymyr Falk
+ *
+ */
+
 public class GomokuMain {
 
 	public static void main(String[] args) {

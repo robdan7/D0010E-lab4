@@ -19,6 +19,9 @@ import lab4.data.GomokuGameState;
 
 /*
  * The GUI class
+ *
+ * @author Robin Danielsson, Zerophymyr Falk
+ *
  */
 
 public class GomokuGUI extends JFrame implements Observer{
@@ -53,7 +56,6 @@ public class GomokuGUI extends JFrame implements Observer{
 			public void mouseClicked(MouseEvent e) {
 				int[] position = gameGridPanel.getGridPosition(e.getX(), e.getY());
 				gamestate.move(position[0], position[1]);
-				//System.out.println("x: " + position[0] + " y:" + position[1]);
 			}
 		});
 		
@@ -77,6 +79,8 @@ public class GomokuGUI extends JFrame implements Observer{
 		this.connectButton = new JButton("Connect");
 		this.newGameButton = new JButton("New game");
 		this.disconnectButton = new JButton("Disconnect");
+		this.newGameButton.setEnabled(false);
+		this.disconnectButton.setEnabled(false);
 		
 		this.connectButton.addActionListener(this.createAction(() -> new ConnectionWindow(this.client)));
 		this.newGameButton.addActionListener(this.createAction(() -> gamestate.newGame()));

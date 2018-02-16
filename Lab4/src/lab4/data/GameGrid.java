@@ -4,18 +4,18 @@ import java.util.HashMap;
 import java.util.Observable;
 
 /**
- * Represents the 2-d game grid
+ * Represents the 2D grid.
+ * @author Robin Danielsson, Zerophymyr Falk
+ *
  */
 
 public class GameGrid extends Observable {
 
 	private Node[][] grid;
 	private int size;
-	public static final int INROW = 5; // Required points to win.
+	public static final int INROW = 3; // Required points to win.
 
 	private HashMap<Node.OccupiedBy, Integer> points; // Keep track of the score for all players.
-
-	
 
 	/**
 	 * Constructor
@@ -36,7 +36,7 @@ public class GameGrid extends Observable {
 		this.clearPoints();
 
 	}
-	
+
 	public void clearPoints() {
 		this.points = new HashMap<>();
 		for (Node.OccupiedBy o : Node.OccupiedBy.values()) {
@@ -81,8 +81,8 @@ public class GameGrid extends Observable {
 		if (this.getLocation(x, y) == Node.OccupiedBy.EMPTY) {
 			this.grid[x][y].setValue(player);
 
-			int newScore = this.grid[x][y].getMaximumChain(this.grid);
-
+			int newScore = this.grid[x][y].getMaximumChain(this.grid, INROW);
+			
 			if (newScore > this.points.get(player)) {
 				this.points.put(player, newScore);
 			}
@@ -129,7 +129,7 @@ public class GameGrid extends Observable {
 	 */
 	public boolean isWinner(Node.OccupiedBy player) {
 		if (this.points.get(player) >= INROW) {
-			
+
 			return true;
 		}
 		return false;
