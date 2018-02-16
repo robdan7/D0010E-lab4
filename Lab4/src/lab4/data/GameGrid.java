@@ -11,9 +11,8 @@ import java.util.Observable;
 public class GameGrid extends Observable {
 
 	private final Node[][] grid;
-	private int highestPoints = 0;
 	private int size;
-	public static final int INROW = 5; // Squares to win.
+	public static final int INROW = 5; // Required points to win.
 
 	private HashMap<Node.OccupiedBy, Integer> points; // Keep track of the score for all players.
 
