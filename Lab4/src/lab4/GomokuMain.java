@@ -8,6 +8,9 @@ public class GomokuMain {
 
 	public static void main(String[] args) {
 		int port;
+		if (args.length > 1) {
+			
+		}
 		try {
 			port = Integer.parseInt(args[0]);
 		} catch (Exception e) {

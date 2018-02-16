@@ -11,7 +11,7 @@ public class GameGrid extends Observable {
 
 	private Node[][] grid;
 	private int size;
-	public static final int INROW = 2; // Required points to win.
+	public static final int INROW = 5; // Required points to win.
 
 	private HashMap<Node.OccupiedBy, Integer> points; // Keep track of the score for all players.
 
