@@ -172,7 +172,7 @@ class Node {
 			throw new IllegalArgumentException("Array does not contain two integers");
 		} else if ((totalNeighbors[0] == GameGrid.INROW) || (totalNeighbors[1] == GameGrid.INROW)) {
 			// The required neighbors have been found.
-			return new int[] { totalNeighbors[0], totalNeighbors[1] };
+			return totalNeighbors;
 		} 
 
 		int loopPattern = 0; // this takes care of the direction of the diagonal pattern.
