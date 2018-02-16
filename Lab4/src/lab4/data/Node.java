@@ -1,8 +1,5 @@
 package lab4.data;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 /**
  * An instance of this class is a single node in a grid.
  * 
@@ -28,7 +25,7 @@ class Node {
 	 *            - The array to search in. An exception is thrown if the starting
 	 *            node is not in it.
 	 * @return The longest chain of {@link Node} instances in either a horizontal,
-	 *         vertical or diagonal direction. The longest chain will be returned.
+	 *         vertical or diagonal direction.
 	 */
 	public int getMaximumChain(Node[][] grid) {
 		if (!grid[this.getX()][this.getY()].equals(this)) {
@@ -171,11 +168,11 @@ class Node {
 	 *         directions a corresponding array is returned.
 	 */
 	private int[] getDiagonalNeighbors(Node[][] grid, Node n, int[] totalNeighbors) {
-		if ((totalNeighbors[0] == GameGrid.INROW) || (totalNeighbors[1] == GameGrid.INROW)) {
-			return new int[] { totalNeighbors[0], totalNeighbors[1] };
-		} else if (totalNeighbors.length != 2) {
+		if (totalNeighbors.length != 2) {
 			throw new IllegalArgumentException("Array does not contain two integers");
-		}
+		} else if ((totalNeighbors[0] == GameGrid.INROW) || (totalNeighbors[1] == GameGrid.INROW)) {
+			return new int[] { totalNeighbors[0], totalNeighbors[1] };
+		} 
 
 		int loopPattern = 0; // this takes care of the direction of the diagonal pattern.
 
